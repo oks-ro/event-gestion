@@ -32,9 +32,8 @@ public class UtilisateurController {
     @GetMapping("/insertUtilisateur")
     public String insertUtilisateur(String nom, String prenom, int age, String location, RedirectAttributes redirectAttributes){
         if (nom.isEmpty() || prenom.isEmpty() || location.isEmpty() || age == 0){
-            redirectAttributes.addAttribute("save_error", "Echec saisie");
+            redirectAttributes.addFlashAttribute("save_error", "Echec saisie");
             return "redirect:/getUtilisateur";
-
         }else {
             Utilisateur utilisateur = new Utilisateur();
             utilisateur.setNom(nom);
@@ -42,9 +41,33 @@ public class UtilisateurController {
             utilisateur.setAge(age);
             utilisateur.setLocation(location);
             Utilisateur utilisateurSave = utilisateurComponent.ajoutUtilisateur(utilisateur);
-            redirectAttributes.addAttribute("save_success", "Saisie Validée avec succès");
+            redirectAttributes.addFlashAttribute("save_success", "Saisie Validée avec succès");
             return "redirect:/getUtilisateur";
         }
+    }
 
+    @GetMapping("/updateUtilisateur")
+    public String updateUtilisateur(Long id, String nom, String prenom, int age, String location, RedirectAttributes redirectAttributes){
+        if (nom.isEmpty() || prenom.isEmpty() || location.isEmpty() || age == 0){
+            redirectAttributes.addFlashAttribute("save_error", "Echec saisie");
+            return "redirect:/getUtilisateur";
+        }else {
+            Utilisateur utilisateur = new Utilisateur();
+            utilisateur.setId(id);
+            utilisateur.setNom(nom);
+            utilisateur.setPrenom(prenom);
+            utilisateur.setAge(age);
+            utilisateur.setLocation(location);
+            Utilisateur utilisateurUpdate = utilisateurComponent.updateUtilisateur(utilisateur);
+            redirectAttributes.addFlashAttribute("save_update", "Mis à jour éffectuer avec succès");
+            return "redirect:/getUtilisateur";
+        }
+    }
+
+    @GetMapping("/deleteUtilisateur")
+    public String deleteUtilisateur(Long id,  RedirectAttributes redirectAttributes){
+        utilisateurComponent.deleteUtilisateur(id);
+        redirectAttributes.addFlashAttribute("delete_success", "Suppression éffectuer avec succès");
+        return "redirect:/getUtilisateur";
     }
 }

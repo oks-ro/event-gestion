@@ -1,6 +1,7 @@
 package tg.esig.event_gestion.component;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 import tg.esig.event_gestion.dao.UtilisateurRepository;
 import tg.esig.event_gestion.model.Utilisateur;
 
@@ -17,17 +18,17 @@ public class UtilisateurComponent {
         Utilisateur utilisateurSave = utilisateurRepository.save(utilisateur);
         return utilisateurSave;
     }
-    public Utilisateur updateUtilisateur(Utilisateur utilisateur){
+    public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
         Utilisateur utilisateurSave = null;
         Optional<Utilisateur> utilisateurOld = utilisateurRepository.findById(utilisateur.getId());
-        if (utilisateurOld.isPresent()){
+        if (utilisateurOld.isPresent()) {
             utilisateurOld.get().setNom(utilisateur.getNom());
             utilisateurOld.get().setPrenom(utilisateur.getPrenom());
             utilisateurOld.get().setAge(utilisateur.getAge());
             utilisateurOld.get().setLocation(utilisateur.getLocation());
             utilisateurSave = utilisateurRepository.save(utilisateurOld.get());
 
-        }else {
+        } else {
             Utilisateur utilisateurNew = new Utilisateur();
             utilisateurNew.setNom(utilisateur.getNom());
             utilisateurNew.setPrenom(utilisateur.getPrenom());
@@ -38,4 +39,10 @@ public class UtilisateurComponent {
         }
         return utilisateurSave;
     }
+
+    public void deleteUtilisateur(Long id){
+        utilisateurRepository.deleteById(id);
+    }
 }
+
+

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Gestion utilisateur</title>
+    <title>Gestion Utilisateur</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link th:href="@{/css/material-design-iconic-font.min.css}" rel="stylesheet">
     <link th:href="@{/css/app.min.1.css}" rel="stylesheet">
@@ -28,7 +28,7 @@
         </li>
 
         <li class="logo hidden-xs">
-            <a><b>Application Gestion d'evenement </b></a>
+            <a><b>Application Gestion des Evenements</b></a>
         </li>
 
         <li class="pull-right">
@@ -90,7 +90,7 @@
                     <a href="/utilisateur"><i class="zmdi zmdi-file-text"></i>Gestion des Utilisateurs</a>
                 </li>
                 <li>
-                    <a href="/evenement"><i class="zmdi zmdi-file-text"></i>Gestion d'evenement'</a>
+                    <a href="/evenement"><i class="zmdi zmdi-file-text"></i>Gestion des Evenements</a>
                 </li>
             </ul>
 
@@ -104,6 +104,9 @@
             <h3 align="center" style="color: #8b211e">Saisie Validée avec succès</h3>
         </div>
 
+        <div th:if="${save_update}" class="alert alert-success">
+            <h3 align="center" style="color: #8b211e">Mise à jour effectuée avec succès</h3>
+        </div>
         <div th:if="${save_error}" class="alert alert-danger">
             <h3 align="center" style="color: #8b211e">Echec saisie </h3>
         </div>
@@ -134,20 +137,17 @@
                     <div class="row col-sm-2">
                     </div>
                     <div class="row col-sm-3">
-                        <input type="text" name="prenom" class="form-control input-sm fileds" id="prenom" placeholder="Saisir prenom" >
+                        <input type="text" name="prenom" class="form-control input-sm fileds" id="prenom" placeholder="Saisir le prenom" >
+                    </div> <div class="row col-sm-2">
+                    </div>
+                    <div class="row col-sm-3">
+                        <input type="number" name="age" class="form-control input-sm fileds" id="age" placeholder="Saisir l'age" >
+                    </div> <div class="row col-sm-2">
+                    </div>
+                    <div class="row col-sm-3">
+                        <input type="text" name="location" class="form-control input-sm fileds" id="location" placeholder="Saisir le lieu" >
                     </div>
                     </div>
-                    <br/>
-                 <div class="row">
-                     <div class="row col-sm-3">
-                         <input type="number" name="age" class="form-control input-sm fileds" id="age" placeholder="Saisir votre age" >
-                     </div>
-                     <div class="row col-sm-2">
-                     </div>
-                     <div class="row col-sm-3">
-                         <input type="text" name="location" class="form-control input-sm fileds" id="location" placeholder="Saisir location" >
-                     </div>
-                 </div>
 
                  <br/>
                     <div class="row">
@@ -166,13 +166,13 @@
                             <thead>
                             <tr >
                                 <th data-column-id="id" data-visible="false">ID</th>
-                                <th data-column-id="nom"> nom</th>
+                                <th data-column-id="nom">nom</th>
                                 <th data-column-id="prenom" ><b>prenom</b></th>
                                 <th data-column-id="age" ><b>age</b></th>
                                 <th data-column-id="location" ><b>location</b></th>
-                                <!-- <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commandes</th>-->
+                               <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commandes</th>
 
-                                 <!--<th data-column-id="commands" data-formatter="commands" data-sortable="false">Commandes</th>-->
+                               <!--- <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commandes</th>-->
 
                             </tr>
                             </thead>
@@ -210,12 +210,20 @@
                         </div>
                         <div class="row">
                             <div class="row col-sm-3">
-                                <input type="text" name="medicamentupdate" class="form-control input-sm fileds" id="medupdate" placeholder="Saisir le medicament" >
+                                <input type="text" name="nomUpdate" class="form-control input-sm fileds" id="nomUpdate" placeholder="Saisir le nom" >
                             </div>
                             <div class="row col-sm-2">
                             </div>
                             <div class="row col-sm-3">
-                                <input type="text" name="typeupdate" class="form-control input-sm fileds" id="typeupdate" placeholder="Saisir type" >
+                                <input type="text" name="prenomUpdate" class="form-control input-sm fileds" id="prenomUpdate" placeholder="Saisir le prenom" >
+                            </div> <div class="row col-sm-2">
+                        </div><br/><br/>
+                            <div class="row col-sm-3">
+                                <input type="number" name="ageUpdate" class="form-control input-sm fileds" id="ageUpdate" placeholder="Saisir l'age" >
+                            </div> <div class="row col-sm-2">
+                        </div>
+                            <div class="row col-sm-3">
+                                <input type="text" name="locationUpdate" class="form-control input-sm fileds" id="locationUpdate" placeholder="Saisir le lieu" >
                             </div>
                         </div>
                         <div class="row">
@@ -293,7 +301,7 @@
     $('#sauve').click(function() {
 
      //alert("ok");
-            window.location.href='/insertUtilisateur?nom='+$('#nom').val() + '&prenom='+$('#prenom').val() + '&age='+$('#age').val() + '&location='+$('#location').val();
+            window.location.href='/insertUtilisateur?nom='+$('#nom').val() + '&prenom='+$('#prenom').val() + '&age='+$('#age').val()+'&location='+$('#location').val();
 
 
         }
@@ -301,14 +309,13 @@
 
 
     $('#yesEdit').click(function () {
-        window.location.href='/update?dsignation='+$('#medupdate').val() + '&type='+$('#typeupdate').val() + '&olddesignation='+$('#coded').val();
+        window.location.href='/updateUtilisateur?id='+$('#coded').val() + '&nom='+$('#nomUpdate').val() + '&prenom='+$('#prenomUpdate').val() + '&age='+$('#ageUpdate').val()+'&location='+$('#locationUpdate').val();
 
 
     });
 
     $('#yesDelete').click(function () {
-        window.location.href='/delete?id_med='+$('#delcoded').val();
-
+        window.location.href='/deleteUtilisateur?id='+$('#delcoded').val();
 
     });
 

@@ -54,6 +54,9 @@ public class Utilisateur {
     }
 
     //setters
+    public void setId(Long id){
+        this.id = id;
+    }
     public void setNom(String nom) {
         this.nom = nom;
     }
